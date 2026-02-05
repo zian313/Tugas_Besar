@@ -1,60 +1,217 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Tugas Besar - E-Commerce Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi E-Commerce berbasis web yang dibangun menggunakan **Laravel 12** dengan fitur manajemen produk, kategori, keranjang belanja, dan sistem pemesanan.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📋 Deskripsi Project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Aplikasi ini adalah sistem e-commerce lengkap yang memungkinkan:
+- **Admin** untuk mengelola produk, kategori, dan pesanan
+- **Pembeli** untuk browsing produk, menambahkan ke keranjang, dan melakukan checkout
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## ✨ Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🔐 Autentikasi & Otorisasi
+- Register & Login
+- Role-based access (Admin & Pembeli)
+- Session management
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 👨‍💼 Admin Dashboard
+- Kelola Kategori (Create, Read, Update, Delete)
+- Kelola Produk (CRUD dengan upload gambar)
+- Kelola Pesanan (Update status pesanan)
+- Dashboard statistik
 
-## Laravel Sponsors
+### 🛍️ Fitur Pembeli
+- Browse produk dengan filter kategori
+- Detail produk
+- Keranjang belanja
+- Checkout & pemesanan
+- Riwayat pesanan
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 📦 Manajemen Produk
+- Upload gambar produk
+- Stok management
+- Kategori produk
+- Harga & deskripsi
 
-### Premium Partners
+### 📊 Manajemen Pesanan
+- Status tracking (Pending, Paid, Shipped, Completed, Cancelled)
+- Detail pesanan & alamat pengiriman
+- Update status pesanan oleh admin
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🛠️ Tech Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Framework:** Laravel 12.x
+- **PHP:** ^8.2
+- **Database:** MySQL
+- **Frontend:** Blade Templates, CSS (Inline styling)
+- **Icons:** Feather Icons
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📦 Instalasi
 
-## Security Vulnerabilities
+### Prerequisites
+- PHP >= 8.2
+- Composer
+- MySQL
+- Node.js & NPM
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Langkah Instalasi
 
-## License
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/zian313/Tugas_Besar.git
+   cd Tugas_Besar
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# Tugas_Besar
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Setup environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Konfigurasi database**
+   
+   Edit file `.env`:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=rizzler
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+5. **Migrasi database**
+   ```bash
+   php artisan migrate
+   ```
+
+6. **Seed data (opsional)**
+   ```bash
+   php artisan db:seed
+   ```
+
+7. **Run development server**
+   ```bash
+   php artisan serve
+   ```
+
+   Aplikasi akan berjalan di: `http://127.0.0.1:8000`
+
+---
+
+## 🗄️ Database Schema
+
+### Tables
+- **users** - Data pengguna (admin & pembeli)
+- **categories** - Kategori produk
+- **products** - Data produk
+- **carts** - Keranjang belanja
+- **cart_items** - Item di keranjang
+- **orders** - Data pesanan
+- **order_items** - Detail item pesanan
+
+---
+
+## 👤 Default Users
+
+Setelah seeding, gunakan kredensial berikut:
+
+**Admin:**
+- Email: `admin@example.com`
+- Password: `password`
+
+**Pembeli:**
+- Email: `user@example.com`
+- Password: `password`
+
+---
+
+## 📁 Struktur Project
+
+```
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── AuthController.php
+│   │   ├── ProductController.php
+│   │   ├── CategoryController.php
+│   │   ├── CartController.php
+│   │   └── OrderController.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Product.php
+│   │   ├── Category.php
+│   │   ├── Cart.php
+│   │   └── Order.php
+│   └── Middleware/
+│       └── CheckRole.php
+├── database/
+│   ├── migrations/
+│   └── seeders/
+├── resources/
+│   └── views/
+│       ├── auth/
+│       ├── products/
+│       ├── categories/
+│       ├── cart/
+│       └── admin/
+└── routes/
+    └── web.php
+```
+
+---
+
+## 🚀 Cara Penggunaan
+
+### Sebagai Admin
+1. Login menggunakan akun admin
+2. Akses menu "Kelola Kategori" untuk menambah kategori produk
+3. Akses menu "Kelola Produk" untuk menambah/edit produk
+4. Kelola pesanan di "Kelola Pesanan"
+
+### Sebagai Pembeli
+1. Register atau login dengan akun pembeli
+2. Browse produk di halaman utama
+3. Klik produk untuk melihat detail
+4. Tambahkan ke keranjang
+5. Checkout dan isi alamat pengiriman
+
+---
+
+## 📸 Screenshots
+
+_Coming soon..._
+
+---
+
+## 🤝 Kontributor
+
+- **Zildzian Muhammad** - [zian313](https://github.com/zian313)
+
+---
+
+## 📝 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+## 📧 Kontak
+
+Untuk pertanyaan atau feedback:
+- Email: zianmuhammad54@gmail.com
+- GitHub: [@zian313](https://github.com/zian313)
