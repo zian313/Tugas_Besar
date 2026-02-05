@@ -28,16 +28,7 @@
       @endauth
     </div>
 
-    <!-- Alert Success -->
-    @if (session('success'))
-      <div style="background-color: #d4edda; border-left: 4px solid #28a745; color: #155724; padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <p style="font-weight: 600; margin: 0 0 0.25rem 0; font-size: 1rem;">✅ Berhasil!</p>
-          <p style="margin: 0; color: #155724; font-size: 0.95rem;">{{ session('success') }}</p>
-        </div>
-        <button onclick="this.parentElement.style.display='none'" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #155724;">×</button>
-      </div>
-    @endif
+    <!-- SweetAlert Success replaced with script at bottom -->
 
     <!-- Products Table/Grid -->
     @if ($products->count() > 0)
@@ -105,11 +96,12 @@
                           <form method="POST" action="{{ route('products.destroy', $product->id) }}" style="display: inline; margin: 0;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" 
+                            <button type="button" class="delete-product-btn"
+                                    data-product-id="{{ $product->id }}"
+                                    data-product-name="{{ $product->name }}"
                                     style="padding: 0.5rem 1rem; background-color: #dc3545; color: white; border: none; border-radius: 0.4rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.3s;"
                                     onmouseover="this.style.backgroundColor='#c82333'"
-                                    onmouseout="this.style.backgroundColor='#dc3545'"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
+                                    onmouseout="this.style.backgroundColor='#dc3545'">
                               🗑️ Hapus
                             </button>
                           </form>
@@ -180,11 +172,12 @@
                     <form method="POST" action="{{ route('products.destroy', $product->id) }}" style="flex: 1; margin: 0;">
                       @csrf
                       @method('DELETE')
-                      <button type="submit" 
+                      <button type="button" class="delete-product-btn"
+                              data-product-id="{{ $product->id }}"
+                              data-product-name="{{ $product->name }}"
                               style="width: 100%; padding: 0.75rem; background-color: #dc3545; color: white; border: none; border-radius: 0.4rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Poppins', sans-serif;"
                               onmouseover="this.style.backgroundColor='#c82333'; this.style.transform='translateY(-2px)'"
-                              onmouseout="this.style.backgroundColor='#dc3545'; this.style.transform='translateY(0)'"
-                              onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')">
+                              onmouseout="this.style.backgroundColor='#dc3545'; this.style.transform='translateY(0)'">
                         🗑️ Hapus
                       </button>
                     </form>
@@ -233,6 +226,26 @@
 
 <script>
   feather.replace();
+
+  // SweetAlert2 Toast for Success Message
+  @if(session('success'))
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: '{{ session('success') }}'
+    })
+  @endif
 </script>
 
 @endsection
