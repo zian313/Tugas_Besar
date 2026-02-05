@@ -5,13 +5,24 @@
     <h1 style="text-align: center; margin-bottom: 2rem; color: #333;">🛍️ Daftar Produk</h1>
 
     <!-- Filter by Category -->
-    <div style="margin-bottom: 2rem; text-align: center;">
-        <a href="{{ route('products.pembeli') }}" style="display: inline-block; padding: 0.5rem 1rem; background-color: #1e09e2; color: white; border-radius: 0.3rem; text-decoration: none; margin-right: 1rem; transition: 0.3s;" 
-            onmouseover="this.style.backgroundColor='#1a07b8'" onmouseout="this.style.backgroundColor='#1e09e2'">Semua Produk</a>
-        @foreach ($categories as $category)
-            <a href="{{ route('products.pembeli', ['category' => $category->id]) }}" style="display: inline-block; padding: 0.5rem 1rem; background-color: #6c757d; color: white; border-radius: 0.3rem; text-decoration: none; margin-right: 0.5rem; transition: 0.3s;"
-                onmouseover="this.style.backgroundColor='#5a6268'" onmouseout="this.style.backgroundColor='#6c757d'">{{ $category->name }}</a>
-        @endforeach
+    <div style="background: white; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 2rem;">
+        <h3 style="margin: 0 0 1rem 0; font-size: 1rem; color: #333; font-weight: 600;">📂 Filter Kategori</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+            <a href="{{ route('products.pembeli') }}" 
+               style="display: inline-block; padding: 0.6rem 1.2rem; background-color: {{ !request('category') ? '#1e09e2' : '#f8f9fa' }}; color: {{ !request('category') ? 'white' : '#333' }}; border: 1px solid {{ !request('category') ? '#1e09e2' : '#dee2e6' }}; border-radius: 2rem; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; box-shadow: {{ !request('category') ? '0 2px 4px rgba(30,9,226,0.2)' : 'none' }};" 
+               onmouseover="if(!{{ !request('category') ? 'true' : 'false' }}) { this.style.backgroundColor='#e9ecef'; this.style.borderColor='#adb5bd'; }" 
+               onmouseout="if(!{{ !request('category') ? 'true' : 'false' }}) { this.style.backgroundColor='#f8f9fa'; this.style.borderColor='#dee2e6'; }">
+                ✨ Semua Produk
+            </a>
+            @foreach ($categories as $category)
+                <a href="{{ route('products.pembeli', ['category' => $category->id]) }}" 
+                   style="display: inline-block; padding: 0.6rem 1.2rem; background-color: {{ request('category') == $category->id ? '#1e09e2' : '#f8f9fa' }}; color: {{ request('category') == $category->id ? 'white' : '#333' }}; border: 1px solid {{ request('category') == $category->id ? '#1e09e2' : '#dee2e6' }}; border-radius: 2rem; text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s; box-shadow: {{ request('category') == $category->id ? '0 2px 4px rgba(30,9,226,0.2)' : 'none' }};" 
+                   onmouseover="if({{ request('category') == $category->id ? 'false' : 'true' }}) { this.style.backgroundColor='#e9ecef'; this.style.borderColor='#adb5bd'; }" 
+                   onmouseout="if({{ request('category') == $category->id ? 'false' : 'true' }}) { this.style.backgroundColor='#f8f9fa'; this.style.borderColor='#dee2e6'; }">
+                    {{ $category->name }}
+                </a>
+            @endforeach
+        </div>
     </div>
 
     <!-- Produk Grid -->
