@@ -16,6 +16,10 @@
   <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
 
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
   <style>
     :root {
       --primary: #1e09e2;
@@ -645,6 +649,62 @@
         navbarNav.classList.remove('active');
       });
     });
+
+    // Alert otomatis hilang setelah 4 detik
+    const alertElement = document.querySelector('.alert-custom');
+    if (alertElement) {
+      setTimeout(() => {
+        alertElement.style.transition = 'opacity 0.5s ease';
+        alertElement.style.opacity = '0';
+        setTimeout(() => {
+          alertElement.style.display = 'none';
+        }, 500);
+      }, 4000);
+    }
+
+    // Logout alert dengan SweetAlert2 jika tersedia
+    @if (session('logoutAlert'))
+      // Check if SweetAlert2 is available
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({
+          icon: 'success',
+          title: 'Logout Berhasil',
+          text: '{{ session('success') }}',
+          timer: 2500,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        });
+      }
+    @endif
+
+    // Konfirmasi logout dengan Yes/No
+    function confirmLogout(event) {
+      event.preventDefault();
+      
+      if (typeof Swal !== 'undefined') {
+        Swal.fire({
+          title: 'Yakin ingin logout?',
+          text: 'Anda akan keluar dari akun ini.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Ya, Logout',
+          cancelButtonText: 'Tidak, Batalkan'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            document.getElementById('logout-form').submit();
+          }
+        });
+      } else {
+        // Fallback jika SweetAlert2 tidak tersedia
+        if (confirm('Yakin ingin logout?')) {
+          document.getElementById('logout-form').submit();
+        }
+      }
+    }
   </script>
 
   @yield('extra-js')
