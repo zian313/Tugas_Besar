@@ -2,13 +2,129 @@
 
 @section('title', 'Beranda')
 
+@section('extra-css')
+<style>
+  /* Loading Spinner */
+  .page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(30, 9, 226, 0.95) 0%, rgba(108, 92, 231, 0.95) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOut 0.6s ease-in-out 1.5s forwards;
+  }
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes fadeOut {
+    0% { opacity: 1; visibility: visible; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* Content Animations */
+  .fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  .fade-in-delay-1 { animation-delay: 0.2s; }
+  .fade-in-delay-2 { animation-delay: 0.4s; }
+  .fade-in-delay-3 { animation-delay: 0.6s; }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Scale Animation */
+  .scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Slide In Animation */
+  .slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  @keyframes slideInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Slide In Animation Right */
+  .slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  @keyframes slideInRight {
+    0% {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Initial opacity 0 for animated elements */
+  .animated-element {
+    opacity: 0;
+  }
+</style>
+@endsection
+
 @section('content')
-<div style="padding-top: 100px;">
+<!-- Page Loader -->
+<div class="page-loader">
+  <div class="spinner"></div>
+</div>
+
+<div style="padding-top: 100px;" id="page-content">
   <!-- Hero Section -->
   <section style="background-image: linear-gradient(135deg, rgba(30, 9, 226, 0.8) 0%, rgba(108, 92, 231, 0.8) 100%), url('{{ asset("images/home.jpg") }}'); background-size: cover; background-position: center; background-attachment: fixed; color: white; padding: 4rem 7%; text-align: center; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;">
-    <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; position: relative; z-index: 2;">Selamat Datang di E-Commerce</h1>
-    <p style="font-size: 1.3rem; margin-bottom: 2rem; max-width: 600px; line-height: 1.6; position: relative; z-index: 2;">Temukan produk pilihan berkualitas dengan harga terbaik. Belanja mudah, aman, dan terpercaya bersama kami.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;">
+    <h1 class="animated-element fade-in" style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; position: relative; z-index: 2;">Selamat Datang di E-Commerce</h1>
+    <p class="animated-element fade-in fade-in-delay-1" style="font-size: 1.3rem; margin-bottom: 2rem; max-width: 600px; line-height: 1.6; position: relative; z-index: 2;">Temukan produk pilihan berkualitas dengan harga terbaik. Belanja mudah, aman, dan terpercaya bersama kami.</p>
+    <div class="animated-element fade-in fade-in-delay-2" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2;">
       @auth
         @if (Auth::user()->isPembeli())
           <a href="{{ route('products.pembeli') }}" style="background-color: white; color: #1e09e2; padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -32,12 +148,12 @@
 
   <!-- About Section -->
   <section id="about" style="padding: 4rem 7%; background-color: #f8f9fa;">
-    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem; color: #000;">Tentang Kami</h2>
+    <h2 class="animated-element fade-in" style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem; color: #000;">Tentang Kami</h2>
     <div style="max-width: 1000px; margin: 0 auto;">
-      <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #333;">
+      <p class="animated-element fade-in fade-in-delay-1" style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: #333;">
         E-Commerce kami adalah platform belanja online terpadu yang menyediakan berbagai macam produk berkualitas. Kami berkomitmen untuk memberikan pengalaman berbelanja yang terbaik dengan layanan pelanggan yang responsif dan pengiriman yang cepat.
       </p>
-      <p style="font-size: 1.1rem; line-height: 1.8; color: #333;">
+      <p class="animated-element fade-in fade-in-delay-2" style="font-size: 1.1rem; line-height: 1.8; color: #333;">
         Dengan koleksi produk yang terus diperbarui dan harga yang kompetitif, kami siap memenuhi kebutuhan belanja Anda dengan kepuasan 100%.
       </p>
     </div>
@@ -45,10 +161,10 @@
 
   <!-- Features Section -->
   <section style="padding: 4rem 7%; background-color: white;">
-    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem; color: #000;">Keunggulan Kami</h2>
+    <h2 class="animated-element fade-in" style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 3rem; color: #000;">Keunggulan Kami</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
       
-      <div style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
+      <div class="animated-element scale-in fade-in-delay-1" style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
         <div style="font-size: 3rem; margin-bottom: 1rem; color: #1e09e2;">
           <i data-feather="truck"></i>
         </div>
@@ -56,7 +172,7 @@
         <p style="color: #666; font-size: 0.95rem;">Pengiriman ke seluruh Indonesia dengan jaminan barang sampai dengan selamat.</p>
       </div>
 
-      <div style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
+      <div class="animated-element scale-in fade-in-delay-2" style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
         <div style="font-size: 3rem; margin-bottom: 1rem; color: #1e09e2;">
           <i data-feather="shield"></i>
         </div>
@@ -64,7 +180,7 @@
         <p style="color: #666; font-size: 0.95rem;">Sistem pembayaran terenkripsi dan terpercaya untuk keamanan transaksi Anda.</p>
       </div>
 
-      <div style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
+      <div class="animated-element scale-in fade-in-delay-3" style="background-color: #f8f9fa; padding: 2rem; border-radius: 0.8rem; text-align: center; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
         <div style="font-size: 3rem; margin-bottom: 1rem; color: #1e09e2;">
           <i data-feather="headphones"></i>
         </div>
@@ -77,13 +193,13 @@
 
   <!-- Products Preview Section -->
   <section style="padding: 4rem 7%; background-color: #f8f9fa;">
-    <h2 style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem; color: #000;">Produk Terbaru</h2>
-    <p style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Lihat koleksi produk terbaru dan terlengkap kami</p>
+    <h2 class="animated-element fade-in" style="font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 1rem; color: #000;">Produk Terbaru</h2>
+    <p class="animated-element fade-in fade-in-delay-1" style="text-align: center; color: #666; margin-bottom: 3rem; font-size: 1.1rem;">Lihat koleksi produk terbaru dan terlengkap kami</p>
     
     @if ($products->count() > 0)
       <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-        @foreach ($products as $product)
-          <div style="background: white; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); overflow: hidden; transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'">
+        @foreach ($products as $index => $product)
+          <div class="animated-element scale-in" style="animation-delay: {{ $index * 0.1 }}s; background: white; border-radius: 0.5rem; box-shadow: 0 2px 8px rgba(30, 9, 226, 0.1); overflow: hidden; transition: 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 5px 20px rgba(30, 9, 226, 0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(30, 9, 226, 0.1)'")
             
             <!-- Gambar Produk -->
             <div style="position: relative; overflow: hidden; height: 200px;">
@@ -141,8 +257,9 @@
 
   <!-- CTA Section -->
   <section style="background: linear-gradient(135deg, #1e09e2 0%, #6c5ce7 100%); color: white; padding: 4rem 7%; text-align: center;">
-    <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Siap untuk Berbelanja?</h2>
-    <p style="font-size: 1.1rem; margin-bottom: 2rem;">Bergabunglah dengan ribuan pelanggan puas kami dan nikmati pengalaman belanja terbaik.</p>
+    <h2 class="animated-element fade-in" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">Siap untuk Berbelanja?</h2>
+    <p class="animated-element fade-in fade-in-delay-1" style="font-size: 1.1rem; margin-bottom: 2rem;">Bergabunglah dengan ribuan pelanggan puas kami dan nikmati pengalaman belanja terbaik.</p>
+    <div class="animated-element fade-in fade-in-delay-2">
     @if (Auth::check())
       @if(auth()->user()->role === 'admin')
         <a href="{{ route('products.index') }}" style="background-color: white; color: #1e09e2; padding: 1rem 2rem; border-radius: 0.5rem; font-weight: 600; font-size: 1.1rem; text-decoration: none; display: inline-block; transition: 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -158,10 +275,38 @@
         Daftar Sekarang
       </a>
     @endif
+    </div>
   </section>
 </div>
 
 <script>
   feather.replace();
+
+  // Trigger animations when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const animatedElements = document.querySelectorAll('.animated-element');
+    animatedElements.forEach(el => {
+      el.style.opacity = '1';
+    });
+  });
+
+  // Intersection Observer untuk animasi saat scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.animated-element').forEach(el => {
+    observer.observe(el);
+  });
 </script>
 @endsection
