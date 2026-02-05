@@ -56,9 +56,9 @@
             <span style="background-color: #28a745; color: white; padding: 0.2rem 0.6rem; border-radius: 0.3rem; font-size: 0.75rem; margin-left: 0.5rem;">[PEMBELI]</span>
           @endif
         </span>
-        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+        <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: inline;">
           @csrf
-          <button type="submit" style="background: none; border: none; cursor: pointer; color: #000; font-size: 1.1rem; padding: 0; display: flex; align-items: center;" title="Logout">
+          <button type="button" onclick="confirmLogout(event)" style="background: none; border: none; cursor: pointer; color: #000; font-size: 1.1rem; padding: 0; display: flex; align-items: center;" title="Logout">
             <i data-feather="log-out"></i>
           </button>
         </form>
