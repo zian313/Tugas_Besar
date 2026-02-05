@@ -14,13 +14,7 @@
       @endif
     </div>
 
-    <!-- Alert Messages -->
-    @if (session('success'))
-      <div style="background-color: #d4edda; color: #155724; padding: 1rem; border-radius: 0.3rem; margin-bottom: 1.5rem; border: 1px solid #c3e6cb; display: flex; justify-content: space-between; align-items: center;">
-        <p style="margin: 0;">✓ {{ session('success') }}</p>
-        <button onclick="this.parentElement.style.display='none'" style="background: none; border: none; color: #155724; cursor: pointer; font-size: 1.2rem;">×</button>
-      </div>
-    @endif
+    <!-- SweetAlert Success replaced with script at bottom -->
 
     <!-- Categories Grid -->
     @if ($categories->count() > 0)
@@ -63,10 +57,11 @@
                      onmouseout="this.style.backgroundColor='#0dcaf0'">
                     Edit
                   </a>
-                  <form method="POST" action="{{ route('categories.destroy', $category) }}" style="flex: 1;" onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
+                  <form method="POST" action="{{ route('categories.destroy', $category) }}" style="flex: 1;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" 
+                    <button type="button" class="delete-category-btn"
+                            data-category-name="{{ $category->name }}"
                             style="width: 100%; background-color: #dc3545; color: white; padding: 0.5rem; border: none; border-radius: 0.3rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: 0.3s;"
                             onmouseover="this.style.backgroundColor='#c82333'"
                             onmouseout="this.style.backgroundColor='#dc3545'">
@@ -113,5 +108,51 @@
 
 <script>
   feather.replace();
+
+  // SweetAlert2 Toast for Success Message
+  @if(session('success'))
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: '{{ session('success') }}'
+    })
+  @endif
+
+  // SweetAlert2 for category deletion
+  document.querySelectorAll('.delete-category-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const categoryName = this.dataset.categoryName;
+      const form = this.closest('form');
+
+      Swal.fire({
+        title: 'Hapus Kategori?',
+        html: `Apakah Anda yakin ingin menghapus kategori <br><strong>${categoryName}</strong>?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '🗑️ Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        focusCancel: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+    });
+  });
 </script>
 @endsection
