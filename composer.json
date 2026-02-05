@@ -36,6 +36,7 @@
         }
     },
     "scripts": {
+        "fix-cache": "@php fix-cache-dir.php",
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -53,6 +54,7 @@
             "@php artisan test"
         ],
         "post-autoload-dump": [
+            "@php fix-cache-dir.php",
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
